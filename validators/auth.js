@@ -1,0 +1,42 @@
+const {check} = require("express-validator");//chekar datos
+const {validateResults} = require("../utils/handleValidator");
+
+const validatorRegister = [
+    check("name")
+    .exists()//debe existir
+    .notEmpty()//no vacio
+    .isLength({min: 3, max:99}),//longitud
+
+    check("age")
+    .exists()
+    .notEmpty()
+    .isNumeric(),
+
+    check("email")
+    .exists()
+    .notEmpty()
+    .isEmail(),
+
+    check("password")
+    .exists()
+    .notEmpty()
+    .isLength({min: 3, max:15}),
+    (req, res, next)=> validateResults(req, res, next)//
+
+];
+
+const validatorLogin = [
+    check("email")
+    .exists()
+    .notEmpty()
+    .isEmail(),
+
+    check("password")
+    .exists()
+    .notEmpty()
+    .isLength({min: 3, max:15}),
+    (req, res, next)=> validateResults(req, res, next)//
+
+];
+
+module.exports = {validatorRegister, validatorLogin};
